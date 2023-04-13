@@ -1,6 +1,7 @@
 class Main {
     constructor() {
         this.fps = 60;
+        this.sudoku = new Sudoku();
     }
 
     update() {
@@ -8,7 +9,7 @@ class Main {
     }
 
     draw() {
-        
+        this.sudoku.draw();
     }
 
     run() {
