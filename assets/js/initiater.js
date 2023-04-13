@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', init);
 
 function init() {
     setUpCanvas();
+    startMain();
 }
 
 function setUpCanvas() {
@@ -12,4 +13,9 @@ function setUpCanvas() {
     _$canvas.width = 800;
     _$canvas.height = 800;
     drawRect('#FFD3B6', [0, 0, _$canvas.width, _$canvas.height]);
+}
+
+function startMain() {
+    const main = new Main();
+    main.run();
 }
