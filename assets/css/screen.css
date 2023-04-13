@@ -3,20 +3,27 @@ body {
     width: 100vw;
     overflow: hidden;
     background-color: #DCEDC1;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 
 .flex-container {
     display: flex;
 }
 
+div.left {
+    flex-basis: 25%;
+    align-items: center;
+    justify-content: center;
+}
+
 div.center {
     align-items: center;
     flex-direction: column;
+    flex-basis: 50%;
 }
 
 div.right {
-    width: 36rem;
+    flex-basis: 25%;
 }
 
 div.right p:first-of-type {
@@ -28,7 +35,6 @@ div.right p {
     color: #ffc5b6;
     font-size: 1.75rem;
     margin-bottom: 0.5rem;
-    margin-left: 2rem;
     text-shadow: 1px 0 #FF8B94, -1px 0 #FF8B94, 0 1px #FF8B94, 0 -1px #FF8B94, 0.5px 0.5px #FF8B94, -0.5px -0.5px #FF8B94, -0.5px 0.5px #FF8B94, 0.5px -0.5px #FF8B94;
 }
 
@@ -39,21 +45,21 @@ canvas {
 
 h1 {
     font-size: 4rem;
-    margin: 0.5rem 0rem 0.5rem 0rem;
+    margin: 0.5rem 0rem;
     font-weight: bold;
     color: #FF8B94;
     text-shadow: 4px 0 #FFD3B6, -4px 0 #FFD3B6, 0 4px #FFD3B6, 0 -4px #FFD3B6, 2px 2px #FFD3B6, -2px -2px #FFD3B6, -2px 2px #FFD3B6, 2px -2px #FFD3B6;
 }
 
 button {
-    margin-top: 1rem;
     background-color: #FFD3B6;
     border: #FF8B94 solid 0.3rem;
-    width: 10rem;
-    height: 5rem;
+    width: 15rem;
+    height: 7rem;
     color: #FF8B94;
-    font-size: 2rem;
-    border-radius: 0.25rem;
+    font-size: 4rem;
+    border-radius: 0.5rem;
+    margin-left: 5rem;
 }
 
 button:hover {
