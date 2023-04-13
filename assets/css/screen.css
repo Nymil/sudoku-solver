@@ -21,12 +21,13 @@ div.right {
 
 div.right p:first-of-type {
     margin-top: 18rem;
+    margin-bottom: 1rem;
 }
 
 div.right p {
     color: #ffc5b6;
     font-size: 1.75rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
     margin-left: 2rem;
     text-shadow: 1px 0 #FF8B94, -1px 0 #FF8B94, 0 1px #FF8B94, 0 -1px #FF8B94, 0.5px 0.5px #FF8B94, -0.5px -0.5px #FF8B94, -0.5px 0.5px #FF8B94, 0.5px -0.5px #FF8B94;
 }
