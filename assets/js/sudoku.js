@@ -15,4 +15,14 @@ class Sudoku {
             }
         }
     }
+
+    draw() {
+        // draw lines
+        for (let i = 1; i < this.size; i++) {
+            const width = i % 3 === 0 ? 5 : 1;
+            const offset = i * (_$canvas.width / this.size);
+            drawLine('#FF8B94', [offset, 0, offset, _$canvas.width]);
+            drawLine('#FF8B94', [0, offset, _$canvas.width, offset]);
+        }
+    }
 }
