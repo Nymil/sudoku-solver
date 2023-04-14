@@ -16,6 +16,28 @@ class Sudoku {
         }
     }
 
+    solve() {
+        this.updatePossibleCellValues();
+    }
+
+    updatePossibleCellValues() {
+        const nonEmptyCells = this.board.filter(cell => cell.value !== null);
+        nonEmptyCells.forEach(cell => updateBoardFromCell(cell));
+    }
+
+    updateBoardFromCell(placedCell) {
+        const valueToRemove = placedCell.value;
+        // remove the value from cells in same row
+        const sameRowCells = this.board.filter(cell => cell.row === placedCell.row);
+        sameRowCells.forEach(cell => cell.possibleValues.filter(value => value !== placedCell.value));
+        // remove the value from cells in same col
+        const sameColCells = this.board.filter(cell => cell.col === placedCell.col);
+        sameColCells.forEach(cell => cell.possibleValues.filter(value => value !== placedCell.value));
+        // remove the value from cells in same box
+        const sameBoxCells = this.board.filter(cell => cell.box === placedCell.box);
+        sameBoxCells.forEach(cell => cell.possibleValues.filter(value => value !== placedCell.value));
+    }
+
     setValue(value) {
         const cell = this.getSelectedCell();
         if (!cell) return;

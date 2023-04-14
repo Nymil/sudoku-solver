@@ -44,9 +44,17 @@ class Main {
         };
     }
 
+    handleSolveButtonClick(e) {
+        this.buildPhase = false;
+        this.sudoku.clearSelectedCells();
+        this.draw();
+        this.sudoku.solve();
+    }
+
     addEventListeners() {
         _$canvas.addEventListener('click', (e) => this.handleCellClick(e));
         document.addEventListener('keydown', (e) => this.handleKeyClick(e));
+        document.querySelector('button').addEventListener('click', (e) => this.handleSolveButtonClick(e));
     }
     
 }
