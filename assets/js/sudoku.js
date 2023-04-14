@@ -25,19 +25,19 @@ class Sudoku {
         this.board.forEach(cell => cell.possibleValues = [1, 2, 3, 4, 5, 6, 7, 8, 9]);
         // update possible values
         const nonEmptyCells = this.board.filter(cell => cell.value !== null);
-        nonEmptyCells.forEach(cell => updateBoardFromCell(cell));
+        nonEmptyCells.forEach(cell => this.updateBoardFromCell(cell));
     }
 
     updateBoardFromCell(placedCell) {
         // remove the value from cells in same row
         const sameRowCells = this.board.filter(cell => cell.row === placedCell.row);
-        sameRowCells.forEach(cell => cell.possibleValues.filter(value => value !== placedCell.value));
+        sameRowCells.forEach(cell => cell.possibleValues = cell.possibleValues.filter(value => value !== placedCell.value));
         // remove the value from cells in same col
         const sameColCells = this.board.filter(cell => cell.col === placedCell.col);
-        sameColCells.forEach(cell => cell.possibleValues.filter(value => value !== placedCell.value));
+        sameColCells.forEach(cell => cell.possibleValues = cell.possibleValues.filter(value => value !== placedCell.value));
         // remove the value from cells in same box
         const sameBoxCells = this.board.filter(cell => cell.box === placedCell.box);
-        sameBoxCells.forEach(cell => cell.possibleValues.filter(value => value !== placedCell.value));
+        sameBoxCells.forEach(cell => cell.possibleValues = cell.possibleValues.filter(value => value !== placedCell.value));
     }
 
     setValue(value) {

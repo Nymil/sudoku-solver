@@ -25,6 +25,7 @@ class Main {
     }
 
     handleCellClick(e) {
+        console.log(this.sudoku.getCell(Math.floor(this.getMousePos(e).x / (_$canvas.width / this.sudoku.size)), Math.floor(this.getMousePos(e).y / (_$canvas.height / this.sudoku.size))).possibleValues);
         if (!this.buildPhase) return;
         const pos = this.getMousePos(e);
         const clickedCol = Math.floor(pos.x / (_$canvas.width / this.sudoku.size));
