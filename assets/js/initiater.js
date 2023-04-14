@@ -16,5 +16,4 @@ function setUpCanvas() {
 
 function startMain() {
     const main = new Main();
-    main.run();
 }

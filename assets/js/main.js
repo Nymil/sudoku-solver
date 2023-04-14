@@ -3,6 +3,7 @@ class Main {
         this.fps = 30;
         this.sudoku = new Sudoku();
         this.buildPhase = true;
+        this.draw();
         this.addEventListeners();
     }
 
@@ -11,21 +12,16 @@ class Main {
         this.sudoku.draw();
     }
 
-    run() {
-        // draw in loop so draw function doesn't need to be called in other code
-        setInterval(() => {
-            this.draw();
-        }, 1000 / this.fps);
-    }
-
     handleKeyClick(e) {
         const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         if (e.key === 'Delete') {
             this.sudoku.remValue();
+            this.draw();
             return;
         }
         if (!numbers.includes(parseInt(e.key))) return;
         this.sudoku.setValue(parseInt(e.key));
+        this.draw();
     }
 
     handleCellClick(e) {
@@ -37,6 +33,7 @@ class Main {
         this.sudoku.clearSelectedCells();
         // add new selection
         this.sudoku.selectCell(clickedCol, clickedRow);
+        this.draw();
     }
 
     getMousePos(e) {
