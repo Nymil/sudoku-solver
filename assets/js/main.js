@@ -5,6 +5,7 @@ class Main {
     }
 
     draw() {
+        drawRect('#FFD3B6', [0, 0, _$canvas.width, _$canvas.height]);
         this.sudoku.draw();
     }
 

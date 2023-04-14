@@ -17,6 +17,8 @@ class Sudoku {
     }
 
     draw() {
+        // draw cell text
+        this.board.forEach(cell => cell.draw());
         // draw lines
         for (let i = 1; i < this.size; i++) {
             const width = i % 3 === 0 ? 5 : 1;
