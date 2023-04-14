@@ -18,6 +18,16 @@ class Main {
         }, 1000 / this.fps);
     }
 
+    handleKeyClick(e) {
+        const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        if (e.key === 'Delete') {
+            this.sudoku.remValue();
+            return;
+        }
+        if (!numbers.includes(parseInt(e.key))) return;
+        this.sudoku.setValue(parseInt(e.key));
+    }
+
     handleCellClick(e) {
         if (!this.buildPhase) return;
         const pos = this.getMousePos(e);
@@ -39,6 +49,7 @@ class Main {
 
     addEventListeners() {
         _$canvas.addEventListener('click', (e) => this.handleCellClick(e));
+        document.addEventListener('keydown', (e) => this.handleKeyClick(e));
     }
     
 }

@@ -16,6 +16,20 @@ class Sudoku {
         }
     }
 
+    setValue(value) {
+        const cell = this.getSelectedCell();
+        if (!cell) return;
+        cell.value = value;
+        cell.static = true;
+    }
+
+    remValue() {
+        const cell = this.getSelectedCell();
+        if (!cell) return;
+        cell.value = null;
+        cell.static = false;
+    }
+
     clearSelectedCells() {
         const selectedCell = this.getSelectedCell();
         if (selectedCell) selectedCell.selected = false;
