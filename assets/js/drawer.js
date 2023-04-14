@@ -27,3 +27,8 @@ function drawCircle(color, center, radius) {
     _ctx.arc(center[0], center[1], radius, 0, 2 * Math.PI);
     _ctx.fill();
 }
+
+function drawText(text, pos, size) {
+    _ctx.font = `${size}px Arial`;
+    _ctx.fillText(text, pos[0], pos[1]);
+}
