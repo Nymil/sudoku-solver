@@ -1,7 +1,7 @@
 class Cell {
-    constructor(col, row, section) {
+    constructor(col, row, box) {
         this.col = col;
         this.row = row;
-        this.section = section;
+        this.box = box;
     }
 }
