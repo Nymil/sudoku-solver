@@ -2,7 +2,7 @@ class Main {
     constructor() {
         this.fps = 30;
         this.sudoku = new Sudoku();
-        this.isSolving = false;
+        this.buildPhase = true;
         this.addEventListeners();
     }
 
@@ -19,6 +19,7 @@ class Main {
     }
 
     handleCellClick(e) {
+        if (!this.buildPhase) return;
         const pos = this.getMousePos(e);
         const clickedCol = Math.floor(pos.x / (_$canvas.width / this.sudoku.size));
         const clickedRow = Math.floor(pos.y / (_$canvas.height / this.sudoku.size));
