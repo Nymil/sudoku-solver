@@ -21,12 +21,14 @@ class Sudoku {
     }
 
     updatePossibleCellValues() {
+        // restore possible values
+        this.board.forEach(cell => cell.possibleValues = [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        // update possible values
         const nonEmptyCells = this.board.filter(cell => cell.value !== null);
         nonEmptyCells.forEach(cell => updateBoardFromCell(cell));
     }
 
     updateBoardFromCell(placedCell) {
-        const valueToRemove = placedCell.value;
         // remove the value from cells in same row
         const sameRowCells = this.board.filter(cell => cell.row === placedCell.row);
         sameRowCells.forEach(cell => cell.possibleValues.filter(value => value !== placedCell.value));
