@@ -16,6 +16,23 @@ class Sudoku {
         }
     }
 
+    clearSelectedCells() {
+        const selectedCell = this.getSelectedCell();
+        if (selectedCell) selectedCell.selected = false;
+    }
+
+    getSelectedCell() {
+        return this.board.find(cell => cell.selected);
+    }
+
+    getCell(col, row) {
+        return this.board.find(cell => cell.col === col && cell.row === row);
+    }
+
+    selectCell(col, row) {
+        this.getCell(col, row).selected = true;
+    }
+
     draw() {
         // draw cell text
         this.board.forEach(cell => cell.draw());
