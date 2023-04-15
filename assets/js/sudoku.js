@@ -1,5 +1,6 @@
 class Sudoku {
-    constructor() {
+    constructor(main) {
+        this.main = main;
         this.board = [];
         this.size = 9;
         this.boxSize = 3;
@@ -16,8 +17,23 @@ class Sudoku {
         }
     }
 
-    solve() {
+    solve(stack) {
         this.updatePossibleCellValues();
+        const leastAmountOfPossibleValues = Math.min(...this.board.map(cell => cell.possibleValues.length));
+
+        if (stack.length === 0 && leastAmountOfPossibleValues === 0) {
+            console.log('unsolvable board');
+            return;
+        }
+        
+        // pick random cell with the least amount of possible values to assign a value to
+        const cellsWithNumberOfPossibleValues = this.board.filter(cell => cell.possibleValues.length === leastAmountOfPossibleValues && cell.value === null);
+        const randomIndex = Math.floor(Math.random() * cellsWithNumberOfPossibleValues.length);
+        const pickedCell = cellsWithNumberOfPossibleValues[randomIndex];
+        const valueIndex = Math.floor(Math.random() * leastAmountOfPossibleValues);
+        pickedCell.value = pickedCell.possibleValues[valueIndex];
+
+        this.main.draw();
     }
 
     updatePossibleCellValues() {

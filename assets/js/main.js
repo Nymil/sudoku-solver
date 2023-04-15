@@ -1,7 +1,7 @@
 class Main {
     constructor() {
         this.fps = 30;
-        this.sudoku = new Sudoku();
+        this.sudoku = new Sudoku(this);
         this.buildPhase = true;
         this.draw();
         this.addEventListeners();
@@ -46,10 +46,11 @@ class Main {
     }
 
     handleSolveButtonClick(e) {
+        if (!this.buildPhase) return;
         this.buildPhase = false;
         this.sudoku.clearSelectedCells();
         this.draw();
-        this.sudoku.solve();
+        this.sudoku.solve([]);
     }
 
     addEventListeners() {
