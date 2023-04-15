@@ -26,7 +26,7 @@ class Sudoku {
             return;
         } else if (leastAmountOfPossibleValues === 0) {
             const cellToRemove = stack.pop();
-            this.restorePossibleValues(cellToRemove);
+            cellToRemove.previousValues.push(cellToRemove.value);
             cellToRemove.value = null;
             this.main.draw();
             setTimeout(() => this.solve(stack), 50);
@@ -45,21 +45,12 @@ class Sudoku {
         }
     }
 
-    restorePossibleValues(removedCell) {
-        // remove the value from cells in same row
-        const sameRowCells = this.board.filter(cell => cell.row === removedCell.row && cell.value === null);
-        sameRowCells.forEach(cell => cell.possibleValues.push(removedCell.value));
-        // remove the value from cells in same col
-        const sameColCells = this.board.filter(cell => cell.col === removedCell.col && cell.value === null);
-        sameColCells.forEach(cell => cell.possibleValues.push(removedCell.value));
-        // remove the value from cells in same box
-        const sameBoxCells = this.board.filter(cell => cell.box === removedCell.box && cell.value === null);
-        sameBoxCells.forEach(cell => cell.possibleValues.push(removedCell.value));
-        // remove the value of the cell from it's own possible values
-        removedCell.possibleValues = removedCell.possibleValues.filter(value => value !== removedCell.value);
-    }
-
     updatePossibleCellValues() {
+        // reset possible values for board
+        this.board.forEach(cell => cell.possibleValues = [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        // remove previously tried values from cell values
+        const cellsWithPreviousValues = this.board.filter(cell => cell.previousValues.length > 0);
+        cellsWithPreviousValues.forEach(cell => cell.possibleValues = cell.possibleValues.filter(value => !cell.previousValues.includes(value)));
         // update possible values
         const nonEmptyCells = this.board.filter(cell => cell.value !== null);
         nonEmptyCells.forEach(cell => this.updateBoardFromCell(cell));
