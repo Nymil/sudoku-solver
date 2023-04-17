@@ -46,11 +46,11 @@ class Main {
     }
 
     handleSolveButtonClick(e) {
-        if (!this.buildPhase) return;
+        // if (!this.buildPhase) return;
         this.buildPhase = false;
         this.sudoku.clearSelectedCells();
         this.draw();
-        this.sudoku.solve([]);
+        this.sudoku.solve();
     }
 
     addEventListeners() {

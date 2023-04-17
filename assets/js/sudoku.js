@@ -4,6 +4,7 @@ class Sudoku {
         this.board = [];
         this.size = 9;
         this.boxSize = 3;
+        this.stack = [];
         this.fillBoard();
     }
 
@@ -17,55 +18,51 @@ class Sudoku {
         }
     }
 
-    solve(stack) {
-        this.updatePossibleCellValues();
-        let leastAmountOfPossibleValues = Math.min(...this.board.filter(cell => cell.value === null).map(cell => cell.possibleValues.length));
-        
-        if (stack.length === 0 && leastAmountOfPossibleValues === 0) {
+    solve() {
+        if (this.stack.length === 1 && this.stack[0].triedValues.length === 9) {
             console.log('unsolvable board');
             return;
-        } else if (leastAmountOfPossibleValues === 0) {
-            const cellToRemove = stack.pop();
-            cellToRemove.previousValues.push(cellToRemove.value);
+        }
+
+        const curCell = this.getNextCell(this.stack[this.stack.length - 1]);
+        const possibleValues = this.getPossibleValuesOfCell(curCell);
+        
+        if (possibleValues.length === 0) {
+            const cellToRemove = this.stack.pop();
+            this.getNextCell(cellToRemove).triedValues = [];
+            cellToRemove.triedValues.push(cellToRemove.value);
             cellToRemove.value = null;
             this.main.draw();
-            setTimeout(() => this.solve(stack), 50);
-            return;
         } else {
-            // pick random cell with the least amount of possible values to assign a value to
-            const cellsWithNumberOfPossibleValues = this.board.filter(cell => cell.possibleValues.length === leastAmountOfPossibleValues && cell.value === null);
-            const randomIndex = Math.floor(Math.random() * cellsWithNumberOfPossibleValues.length);
-            const pickedCell = cellsWithNumberOfPossibleValues[randomIndex];
-            const valueIndex = Math.floor(Math.random() * leastAmountOfPossibleValues);
-            pickedCell.value = pickedCell.possibleValues[valueIndex];
-            stack.push(pickedCell);
-
+            curCell.value = possibleValues[0];
+            this.stack.push(curCell);
             this.main.draw();
-            setTimeout(() => this.solve(stack), 50);
         }
+        setTimeout(() => this.solve(), 1);
     }
 
-    updatePossibleCellValues() {
-        // reset possible values for board
-        this.board.forEach(cell => cell.possibleValues = [1, 2, 3, 4, 5, 6, 7, 8, 9]);
-        // remove previously tried values from cell values
-        const cellsWithPreviousValues = this.board.filter(cell => cell.previousValues.length > 0);
-        cellsWithPreviousValues.forEach(cell => cell.possibleValues = cell.possibleValues.filter(value => !cell.previousValues.includes(value)));
-        // update possible values
-        const nonEmptyCells = this.board.filter(cell => cell.value !== null);
-        nonEmptyCells.forEach(cell => this.updateBoardFromCell(cell));
+    getNextCell(curCell) {
+        const emptyCells = this.board.filter(cell => cell.value === null);
+        const sortedEmptyCells = emptyCells.sort((a, b) => a.col + this.size * a.row - b.col - this.size * b.row);
+        if (curCell) return sortedEmptyCells[0];
+        const nextIndex = sortedEmptyCells.indexOf(curCell) + 1;
+        return sortedEmptyCells[nextIndex];
     }
 
-    updateBoardFromCell(placedCell) {
-        // remove the value from cells in same row
-        const sameRowCells = this.board.filter(cell => cell.row === placedCell.row && cell.value === null);
-        sameRowCells.forEach(cell => cell.possibleValues = cell.possibleValues.filter(value => value !== placedCell.value));
-        // remove the value from cells in same col
-        const sameColCells = this.board.filter(cell => cell.col === placedCell.col && cell.value === null);
-        sameColCells.forEach(cell => cell.possibleValues = cell.possibleValues.filter(value => value !== placedCell.value));
-        // remove the value from cells in same box
-        const sameBoxCells = this.board.filter(cell => cell.box === placedCell.box && cell.value === null);
-        sameBoxCells.forEach(cell => cell.possibleValues = cell.possibleValues.filter(value => value !== placedCell.value));
+    getPossibleValuesOfCell(curCell) {
+        let possibleValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        // remove values of cell in same col
+        const valuesInSameCol = this.board.filter(cell => cell.value !== null && cell.col === curCell.col).map(cell => cell.value);
+        possibleValues = possibleValues.filter(value => !valuesInSameCol.includes(value));
+        // remove values of cell in same row
+        const valuesInSameRow = this.board.filter(cell => cell.value !== null && cell.row === curCell.row).map(cell => cell.value);
+        possibleValues = possibleValues.filter(value => !valuesInSameRow.includes(value));
+        // remove values of cell in same box
+        const valuesInSameBox = this.board.filter(cell => cell.value !== null && cell.box === curCell.box).map(cell => cell.value);
+        possibleValues = possibleValues.filter(value => !valuesInSameBox.includes(value));
+        // remove the values already tried
+        possibleValues = possibleValues.filter(value => !curCell.triedValues.includes(value));
+        return possibleValues;
     }
 
     setValue(value) {
